@@ -1,0 +1,23 @@
+Dàn ý slide — Heuristic & AI reasoning (Thành viên 3, bảo vệ)
+============================================================
+
+1. Heuristic trong Caro là gì
+   - Hàm đánh giá tĩnh thế cờ khi không tìm hết cây (depth giới hạn).
+   - Gán điểm cho các “mẫu đường”: Open/Half-Open Two..Four.
+
+2. Bảng trọng số (Weight Table)
+   - Liệt kê Open Four > Half-Open Four > Open Three > Half-Open Three > Open Two.
+   - Trích số từ heuristic/include/heuristic_weights.h (SCORE_* và BLOCK_*).
+
+3. Vì sao phòng thủ “ăn tiền” hơn tấn công trung bình
+   - BLOCK_HALF_OPEN_FOUR > SCORE_OPEN_THREE: chặn thua ngay quan trọng hơn mở ba tấn công xa.
+
+4. Alpha-Beta giúp gì cho heuristic
+   - Cùng hàm evaluate, Alpha-Beta cắt nhánh kém; AI nhìn sâu hơn trong cùng thời gian → heuristic “đúng” phát huy hơn.
+
+5. Ví dụ một nước đi cụ thể (minh họa)
+   - Chọn 1–2 test từ scenarios.json (ví dụ G2-T01 chặn tứ, G2-T05 ưu tiên thế mạnh).
+   - Giải thích ngắn: nếu AI chọn ô X thì điểm pattern tấn công/phòng thủ thay đổi thế nào.
+
+6. Kết quả sau tuning (phối hợp TV1)
+   - Bảng % pass 15 scenario; nhóm luật + sinh tử 100%; toàn bộ ≥ 90%.

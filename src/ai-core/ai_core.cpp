@@ -241,7 +241,9 @@ long evaluate_board(int board[BOARD_SIZE][BOARD_SIZE], int ai_player) {
     return score;
 }
 
-long alpha_beta(int board[BOARD_SIZE][BOARD_SIZE], int depth, long alpha, long beta, bool is_maximizing, int current_player, SearchContext& ctx) {
+long alpha_beta(int board[BOARD_SIZE][BOARD_SIZE], int depth,
+     long alpha, long beta,
+     bool is_maximizing, int current_player, SearchContext& ctx) {
     ctx.nodes++;
     if (check_timeout(ctx)) return 0;
 
@@ -249,10 +251,10 @@ long alpha_beta(int board[BOARD_SIZE][BOARD_SIZE], int depth, long alpha, long b
 
     Candidate candidates[64];
     int candidate_count = 0;
-    get_candidates(board, candidates, candidate_count, depth, current_player, false);
+    get_candidates(board, candidates, candidate_count, depth,
+         current_player, false);
 
     if (candidate_count == 0) return evaluate_board(board, ctx.ai_player);
-
     if (is_maximizing) {
         long best_score = -INF;
         for (int i = 0; i < candidate_count; i++) {
@@ -263,7 +265,8 @@ long alpha_beta(int board[BOARD_SIZE][BOARD_SIZE], int depth, long alpha, long b
             if (check_win_from(board, move.r, move.c, current_player)) {
                 score = WIN_SCORE + depth;
             } else {
-                score = alpha_beta(board, depth - 1, alpha, beta, false, -current_player, ctx);
+                score = alpha_beta(board, depth - 1, alpha, beta, false,
+                     -current_player, ctx);
             }
             
             board[move.r][move.c] = EMPTY;
@@ -300,14 +303,16 @@ long alpha_beta(int board[BOARD_SIZE][BOARD_SIZE], int depth, long alpha, long b
     }
 }
 
-long minimax(int board[BOARD_SIZE][BOARD_SIZE], int depth, bool is_maximizing, int current_player, SearchContext& ctx) {
+long minimax(int board[BOARD_SIZE][BOARD_SIZE], int depth,
+     bool is_maximizing, int current_player, SearchContext& ctx) {
     ctx.nodes++;
     if (check_timeout(ctx)) return 0;
     if (depth == 0) return evaluate_board(board, ctx.ai_player);
 
     Candidate candidates[64];
     int candidate_count = 0;
-    get_candidates(board, candidates, candidate_count, depth, current_player, false);
+    get_candidates(board, candidates, candidate_count, depth,
+         current_player, false);
 
     if (candidate_count == 0) return evaluate_board(board, ctx.ai_player);
 
@@ -318,7 +323,8 @@ long minimax(int board[BOARD_SIZE][BOARD_SIZE], int depth, bool is_maximizing, i
             board[move.r][move.c] = current_player;
             
             long score;
-            if (check_win_from(board, move.r, move.c, current_player)) score = WIN_SCORE + depth;
+            if (check_win_from(board, move.r, move.c, current_player))
+             score = WIN_SCORE + depth;
             else score = minimax(board, depth - 1, false, -current_player, ctx);
             
             board[move.r][move.c] = EMPTY;
@@ -333,7 +339,8 @@ long minimax(int board[BOARD_SIZE][BOARD_SIZE], int depth, bool is_maximizing, i
             board[move.r][move.c] = current_player;
             
             long score;
-            if (check_win_from(board, move.r, move.c, current_player)) score = -WIN_SCORE - depth;
+            if (check_win_from(board, move.r, move.c, current_player))
+             score = -WIN_SCORE - depth;
             else score = minimax(board, depth - 1, true, -current_player, ctx);
             
             board[move.r][move.c] = EMPTY;

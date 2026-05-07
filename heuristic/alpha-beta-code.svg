@@ -1,0 +1,58 @@
+<svg width="1600" height="940" viewBox="0 0 1600 940" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="80" y1="60" x2="1520" y2="880" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F7F1E7"/>
+      <stop offset="1" stop-color="#E6EEF5"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#11212D"/>
+      <stop offset="1" stop-color="#1C3443"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#4D6472" flood-opacity="0.18"/>
+    </filter>
+    <style>
+      .title { font: 700 42px 'Segoe UI', Arial, sans-serif; fill: #16384B; }
+      .subtitle { font: 500 20px 'Segoe UI', Arial, sans-serif; fill: #58727D; }
+      .label { font: 600 18px 'Consolas', 'Courier New', monospace; fill: #D7E6EE; }
+      .code { font: 600 24px 'Consolas', 'Courier New', monospace; fill: #EAF4F8; }
+      .kw { fill: #FFB86C; }
+      .fn { fill: #8BE9FD; }
+      .num { fill: #BD93F9; }
+      .cm { fill: #7FA2B2; }
+      .cut { fill: #FF6B6B; }
+      .tx { font: 500 18px 'Segoe UI', Arial, sans-serif; fill: #38515D; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="940" rx="36" fill="url(#bg)"/>
+  <text x="100" y="92" class="title">Code Thuật Toán Alpha-Beta Pruning</text>
+  <text x="100" y="128" class="subtitle">Bản rút gọn từ `src/ai-core/ai_core.cpp`, nhấn mạnh cập nhật alpha, beta và điều kiện cắt nhánh</text>
+
+  <rect x="90" y="170" width="1420" height="650" rx="28" fill="url(#panel)" filter="url(#shadow)"/>
+  <circle cx="140" cy="210" r="8" fill="#FF6B6B"/>
+  <circle cx="168" cy="210" r="8" fill="#F7B267"/>
+  <circle cx="196" cy="210" r="8" fill="#6BCB77"/>
+  <text x="240" y="216" class="label">src/ai-core/ai_core.cpp - alpha_beta(...)</text>
+
+  <text x="130" y="280" class="code"><tspan class="kw">long</tspan> <tspan class="fn">alpha_beta</tspan>(board, depth, alpha, beta, is_maximizing, current_player, ctx) {</text>
+  <text x="130" y="325" class="code">  ctx.nodes++;</text>
+  <text x="130" y="370" class="code">  <tspan class="kw">if</tspan> (depth == <tspan class="num">0</tspan>) <tspan class="kw">return</tspan> <tspan class="fn">evaluate_board</tspan>(board, ctx.ai_player);</text>
+  <text x="130" y="415" class="code">  <tspan class="fn">get_candidates</tspan>(board, candidates, candidate_count, depth, current_player, <tspan class="kw">false</tspan>);</text>
+
+  <rect x="118" y="455" width="1364" height="120" rx="18" fill="#183241" stroke="#346178"/>
+  <text x="130" y="498" class="code">  <tspan class="kw">if</tspan> (is_maximizing) {</text>
+  <text x="130" y="543" class="code">    best_score = -INF; <tspan class="cm">// MAX muốn điểm lớn nhất</tspan></text>
+
+  <rect x="118" y="592" width="1364" height="166" rx="18" fill="#1E394A" stroke="#3B6A81"/>
+  <text x="130" y="635" class="code">    <tspan class="kw">for</tspan> (...) {</text>
+  <text x="130" y="680" class="code">      score = <tspan class="fn">alpha_beta</tspan>(board, depth - <tspan class="num">1</tspan>, alpha, beta, <tspan class="kw">false</tspan>, -current_player, ctx);</text>
+  <text x="130" y="725" class="code">      <tspan class="kw">if</tspan> (score &gt; best_score) best_score = score;</text>
+
+  <rect x="118" y="776" width="1364" height="126" rx="18" fill="#244255" stroke="#45788F"/>
+  <text x="130" y="819" class="code">      <tspan class="kw">if</tspan> (best_score &gt; alpha) alpha = best_score;</text>
+  <text x="130" y="864" class="code">      <tspan class="kw">if</tspan> (beta &lt;= alpha) <tspan class="cut">break;</tspan> <tspan class="cm">// cắt nhánh</tspan></text>
+
+  <rect x="90" y="842" width="1420" height="70" rx="18" fill="#F5FAFC" stroke="#D7E3E8"/>
+  <text x="118" y="885" class="tx">Ý chính: Alpha-Beta vẫn cho cùng kết quả như Minimax, nhưng bỏ qua những nhánh không thể cải thiện quyết định hiện tại.</text>
+</svg>
